@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Task Tracker</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Your Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto max-w-lg mt-10 sm:mt-16 px-4">
+
+        <!-- This container holds all authentication views -->
+        <div id="auth-container">
+            <!-- Welcome View -->
+            <div id="welcome-view">
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Welcome to Task Tracker</h1>
+                    <p class="text-gray-600 mb-8">Your personal, real-time to-do list.</p>
+                    
+                    <button id="google-signin-btn" class="w-full bg-white text-gray-700 font-semibold py-3 rounded-md border border-gray-300 hover:bg-gray-50 transition flex items-center justify-center gap-2 mb-4">
+                        <svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>
+                        Sign in with Google
+                    </button>
+
+                    <button id="show-login-btn" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-md hover:bg-indigo-700 transition">Sign in with Email</button>
+                    
+                    <p class="text-sm text-gray-500 mt-6">
+                        Don't have an account? 
+                        <a href="#" id="show-signup-link" class="font-semibold text-indigo-600 hover:underline">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Login View (Initially Hidden) -->
+            <div id="login-view" class="hidden">
+                 <div class="bg-white rounded-xl shadow-xl p-8">
+                    <h1 class="text-3xl font-bold text-center text-gray-900 mb-6">Login with Email</h1>
+                    <form id="login-form" class="space-y-4">
+                        <input type="email" id="login-email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <input type="password" id="login-password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-md hover:bg-indigo-700 transition">Login</button>
+                    </form>
+                    <div class="text-sm text-center mt-4">
+                        <a href="#" id="show-reset-password-link" class="font-semibold text-indigo-600 hover:underline">Forgot Password?</a>
+                    </div>
+                    <p class="text-sm text-center text-gray-500 mt-6">
+                        <a href="#" id="back-to-welcome-from-login" class="font-semibold text-indigo-600 hover:underline">&larr; Back to Welcome</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sign Up View (Initially Hidden) -->
+            <div id="signup-view" class="hidden">
+                <div class="bg-white rounded-xl shadow-xl p-8">
+                    <h1 class="text-3xl font-bold text-center text-gray-900 mb-6">Create Account</h1>
+                    
+                    <button id="google-signin-btn-signup" class="w-full bg-white text-gray-700 font-semibold py-3 rounded-md border border-gray-300 hover:bg-gray-50 transition flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>
+                        Sign up with Google
+                    </button>
+
+                    <div class="my-4 flex items-center">
+                        <hr class="flex-grow border-t border-gray-300">
+                        <span class="mx-4 text-gray-500 text-sm">OR</span>
+                        <hr class="flex-grow border-t border-gray-300">
+                    </div>
+                    
+                    <form id="signup-form" class="space-y-4">
+                        <input type="email" id="signup-email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        <input type="password" id="signup-password" placeholder="Password (min. 6 characters)" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        <button type="submit" class="w-full bg-green-600 text-white font-semibold py-3 rounded-md hover:bg-green-700 transition">Sign Up with Email</button>
+                    </form>
+                     <p class="text-sm text-center text-gray-500 mt-6">
+                        <a href="#" id="back-to-welcome-from-signup" class="font-semibold text-indigo-600 hover:underline">&larr; Back to Welcome</a>
+                    </p>
+                </div>
+            </div>
+
+            <div id="reset-password-view" class="hidden">
+                 <div class="bg-white rounded-xl shadow-xl p-8">
+                    <h1 class="text-3xl font-bold text-center text-gray-900 mb-6">Reset Password</h1>
+                    <p class="text-center text-gray-600 mb-6">Enter your email address and we will send you a link to reset your password.</p>
+                    <form id="reset-password-form" class="space-y-4">
+                        <input type="email" id="reset-email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-md hover:bg-indigo-700 transition">Send Reset Link</button>
+                    </form>
+                    <p class="text-sm text-center text-gray-500 mt-6">
+                        <a href="#" id="back-to-login-from-reset" class="font-semibold text-indigo-600 hover:underline">&larr; Back to Login</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div id="verify-email-view" class="hidden">
+                <div class="bg-white rounded-xl shadow-xl p-8 text-center">
+                    <h1 class="text-2xl font-bold text-green-600 mb-4">Please Verify Your Email</h1>
+                    <p class="text-gray-700 mb-2">A verification link has been sent to:</p>
+                    <p id="verification-email-address" class="font-semibold text-gray-800 mb-6"></p>
+                    <p class="text-gray-600 text-sm">Please check your inbox (and spam folder) to activate your account. This page will automatically refresh once you are verified.</p>
+                    <button id="resend-verification-btn" class="mt-6 w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition">Resend Verification Email</button>
+                    <button id="logout-from-verify-btn" class="mt-2 w-full bg-gray-500 text-white font-semibold py-2 rounded-md hover:bg-gray-600 transition">Logout</button>
+                    <p id="resend-status" class="text-sm text-gray-500 mt-4 h-5"></p>
+                </div>
+            </div>
+
+            <p id="auth-error" class="text-red-500 text-center mt-4 h-5"></p>
+            <p id="auth-success" class="text-green-600 text-center mt-4 h-5"></p>
+
+        </div>
+
+        <!-- Main App Section (Initially Hidden) -->
+        <div id="app-container" class="hidden max-w-2xl mx-auto">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Your Tasks</h1>
+                    <p id="user-email" class="text-gray-600"></p>
+                </div>
+                <button id="logout-button" class="bg-red-500 text-white font-semibold py-2 px-5 rounded-md hover:bg-red-600 transition">Logout</button>
+            </header>
+
+            <div class="bg-white rounded-xl shadow-xl p-6 mb-8">
+                <form id="task-form" class="space-y-4">
+                    <input type="text" id="task-input" placeholder="Enter a new task..." class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" required>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="datetime-local" id="due-date-input" class="flex-grow p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                        <button type="submit" class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">Add Task</button>
+                    </div>
+                </form>
+            </div>
+
+            <main id="task-list" class="bg-white rounded-xl shadow-xl min-h-[100px]">
+                <div id="loading-state" class="p-8 text-center text-gray-500">
+                    <p>Loading tasks...</p>
+                </div>
+            </main>
+        </div>
+
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
